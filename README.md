@@ -14,5 +14,6 @@ A permite usar palavras de dados quaisquer e que possuam os tamanhos acima. Alé
 O algoritmo também faz Checksum para blocos de 3 palavras com uma quantidade de bits iguais a soma dos três últimos dígitos do seu Código de Aluno (962). E por meio de uma função é simulado a inversão de um bit de transmissão entre dois meios de comunicação em uma das palavras.
 
 ## License
-® Alexandre Fernandes da Silva, Stephen Michael Apolinário
+® Alexandre Fernandes da Silva, Stephen Michael Apolinário.
+
 Licensed under the [MIT license](LICENSE).
