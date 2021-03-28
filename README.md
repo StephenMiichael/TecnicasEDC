@@ -3,7 +3,8 @@ Este script tem como finalidade resolver a atividade proposta para nota da M1 de
 
 ## Execução
 
-Para rodar o script, basta abrir um terminal no diretório do script, e executar python tecnicasedc.py
+Para rodar o script, basta abrir um terminal no diretório do script, e execute py -m pip install -r requirements.txt / pip install -r requirements.txt para instalar as importações.
+Após isso, basta executar py tecnicasedc.py para começar o script
 
 ## Funcionalidades
 
