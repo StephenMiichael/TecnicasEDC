@@ -7,7 +7,7 @@
 
 import os  # Para limpar o terminal.
 import keyboard  # Para escutar as teclas pressionadas
-import funcoes  # Implementação do algoritmo de dijkstra
+import funcoes  # Funcoes para funcionamento correto do script
 
 
 def main():
@@ -70,7 +70,7 @@ def menuHamming(msgEnviada, msgRecebida):
             funcoes.visualizarMensagem(msgRecebida, 'Recebida')
             menuHamming(msgEnviada, msgRecebida)
         elif opcao == 4:
-            funcoes.checarErros(msgRecebida)
+            funcoes.checarErros(msgEnviada, msgRecebida)
             menuHamming(msgEnviada, msgRecebida)
         elif opcao == 5:
             funcoes.alterarMensagemRecebida(msgEnviada)

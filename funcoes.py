@@ -133,17 +133,18 @@ def visualizarMensagem(msg, typeMessage):
     else:
         print('Ooops...Houve um ERRO!\nPor favor, contate um colaborador informando os dados de entrada.')
     print('Digite ESC para voltar ao menu de Hamming.')
+
     keyboard.wait('esc')
     os.system('cls')
 
 
-def checarErros(msg):
+def checarErros(msgEnviada, msgRecebida):
     os.system('cls')
     # Uma mensagem de 8 bits através de Hamming, receberá 4 bits de paridade.
     # (12, 8) - 8 + 4 Paridades. A mensagem enviada terá 12 bits ao total
     # Uma mensagem de 17 bits através de Hamming, receberá 5 bits de paridade.
     # (22, 17) - 17 + 5 Paridades. A mensagem enviada terá 22 bits ao total
-    x = list(msg)
+    x = list(msgRecebida)
 
     # Adiciona um valor em branco na primeira posição. Apenas para trabalharmos igual na tabela.
     x.insert(0, '0')
@@ -153,7 +154,8 @@ def checarErros(msg):
     k = []
     # Adiciona um valor em branco na primeira posição. Apenas para trabalharmos igual na tabela.
     k.insert(0, '0')
-    if len(msg) == 12:
+    if len(msgRecebida) == 12:
+        paridades = [0, 1, 3, 7]
         # P1 P2 X1 P3 X2 X3 X4 P4 X5 X06 X07 X08
         # X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12
         k.append(x[1] ^ x[3] ^ x[5] ^ x[7] ^ x[9] ^ x[11])   # K1
@@ -162,7 +164,8 @@ def checarErros(msg):
         k.append(x[8] ^ x[9] ^ x[10] ^ x[11] ^ x[12])        # K4
 
         somaErros = k[1: len(k)]
-    elif len(msg) == 22:
+    elif len(msgRecebida) == 22:
+        paridades = [0, 1, 3, 7, 15]
         # P1 P2 X1 P3 X2 X3 X4 P4 X5 X06 X07 X08 X09 X10 X11 P05 X12 X13 X14 X15 X16 X17
         # X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15 X16 X17 X18 X19 X20 X21 X22
         # K1
@@ -185,6 +188,13 @@ def checarErros(msg):
         print('Ooops...Houve um ERRO!\nPor favor, contate um colaborador informando os dados de entrada.')
     if sum(somaErros) == 0:
         print('Sua mensagem foi transmitida com sucesso!')
+        print(f'Mensagem: ', end="", flush=True)
+        for item in range(len(msgRecebida)):
+            if item in paridades:
+                print(Fore.RED + msgRecebida[item], end="", flush=True)
+            else:
+                print(Fore.WHITE + msgRecebida[item], end="", flush=True)
+        print(Style.RESET_ALL)
     else:
 
         # Deleta o primeiro elemento de K para fazer as contas... (Que é vazio)
@@ -205,27 +215,36 @@ def checarErros(msg):
         # 111101001
         #          1
         #           10
+        print(f'Mensagem: ', end="", flush=True)
+        for item in range(len(msgRecebida)):
+            if item == k - 1:
+                print(Fore.YELLOW + msgRecebida[item], end="", flush=True)
+            elif item in paridades:
+                print(Fore.RED + msgRecebida[item], end="", flush=True)
+            else:
+                print(Fore.WHITE + msgRecebida[item], end="", flush=True)
+        print(Style.RESET_ALL)
 
-    if len(msg) == 12:
-        paridades = [0, 1, 3, 7]
-
-    elif len(msg) == 22:
-        paridades = [0, 1, 3, 7, 15]
-
-    print(f'Mensagem: ', end="", flush=True)
-
-    for item in range(len(msg)):
-        if item == k - 1:
-            print(Fore.YELLOW + msg[item], end="", flush=True)
-        elif item in paridades:
-            print(Fore.RED + msg[item], end="", flush=True)
+        opcao = int(input(
+            "Deseja corrigir automaticamente o erro?\nEscolha uma opção:\n[0] Não\n[1] Sim\n  Resposta: "))
+        if opcao == 1:
+            print("Parabéns! Sua mensagem foi corrigida!")
+            msgRecebidaList = list(msgRecebida)
+            if msgRecebidaList[k-1] == '0':
+                msgRecebidaList[k-1] = '1'
+            else:
+                msgRecebidaList[k-1] = '0'
+            msgRecebida = "".join(msgRecebidaList)
+        elif opcao == 0:
+            pass
         else:
-            print(Fore.WHITE + msg[item], end="", flush=True)
-    print(Style.RESET_ALL)
+            print("Oops... Houve um erro, tente novamente!")
+            checarErros(msgRecebida)
 
     print('Digite ESC para voltar ao menu de Hamming.')
     keyboard.wait('esc')
     os.system('cls')
+    tecnicasedc.menuHamming(msgEnviada, msgRecebida)
 
 
 def alterarMensagemRecebida(msgEnviada):
