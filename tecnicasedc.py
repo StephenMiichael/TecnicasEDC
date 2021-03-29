@@ -115,7 +115,7 @@ def menuChecksum(msgEnviadas, msgRecebidas, edcEnviado, edcRecebido):
     print('Bem vindo ao menu Checksum\n')
     try:
         opcao = int(input("""Selecione uma opção:
-                1 - Digitar mensagens Checksum
+                1 - Enviar mensagens Checksum
                 2 - Visualizar mensagens enviadas
                 3 - Visualizar mensagens recebidas
                 4 - Checar erros
