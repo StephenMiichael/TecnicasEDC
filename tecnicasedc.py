@@ -103,7 +103,7 @@ def envioHamming():
     else:
         os.system('cls')
         print(
-            'Desculpe-me, mas suporto apenas mensagens de 8 e 12 bits.')
+            'Desculpe-me, mas suporto apenas mensagens de 8 e 17 bits.')
         print('Digite ESC para tentar novamente.')
         keyboard.wait('esc')
         os.system('cls')
